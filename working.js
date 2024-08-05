@@ -1,28 +1,45 @@
 const timerMillis = document.querySelector(".timer__milliseconds")
 const timerSeconds = document.querySelector(".timer__seconds")
 const timerMinutes = document.querySelector(".timer__minutes")
+const workingTime = document.querySelector(".working__time")
 
 let startTime
 let cancelId
+let countdown
+let storedTime
 let savedTime = 0
-const countdown = 65 * 1000
 
-const startButtom = document.querySelector(".stopwatch__start")
-const stopButtom = document.querySelector(".stopwatch__stop")
-const resetButtom = document.querySelector(".stopwatch__reset")
+const startButton = document.querySelector(".stopwatch__start")
+const stopButton = document.querySelector(".stopwatch__stop")
+const resetButton = document.querySelector(".stopwatch__reset")
+
+function setTime() {
+    storedTime = workingTime.value.split(':')
+    
+    let minutes = Number(storedTime[0])
+    let seconds = Number(storedTime[1])
+    let millis = Number(storedTime[2])
+    
+    countdown = (((minutes * 60) + seconds) * 1000) + millis 
+    console.log(countdown)
+
+    timerMillis.innerHTML = storedTime[2]
+    timerSeconds.innerHTML = storedTime[1]
+    timerMinutes.innerHTML = storedTime[0]
+}
 
 function startTimer(){
-    startButtom.disabled = true
-    stopButtom.disabled = false
-    resetButtom.disabled = false
+    startButton.disabled = true
+    stopButton.disabled = false
+    resetButton.disabled = false
     startTime = Date.now()
     cancelId = requestAnimationFrame(updateTimer)
 }
 
 function stopTimer(){
-    startButtom.disabled = false
-    stopButtom.disabled = true
-    resetButtom.disabled = false
+    startButton.disabled = false
+    stopButton.disabled = true
+    resetButton.disabled = false
     savedTime += Date.now() - startTime
     cancelAnimationFrame(cancelId)
 }
@@ -30,9 +47,9 @@ function stopTimer(){
 function resetTimer(){
     startTime = Date.now()
     savedTime = 0
-    timerMillis.innerHTML = "000"
-    timerSeconds.innerHTML = "05"
-    timerMinutes.innerHTML = "01"
+    timerMillis.innerHTML = storedTime[2]
+    timerSeconds.innerHTML = storedTime[1]
+    timerMinutes.innerHTML = storedTime[0]
 }
 
 function updateTimer(){
