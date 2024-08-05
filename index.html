@@ -14,8 +14,9 @@
     <div id="stopwatch">
       <h1>Pomodoro Timer</h1>
       <div class="input__wrapper">
-        <input class="working__time" type="text" placeholder="00:00:000">
+        <input id="timeInput" class="working__time" type="text" placeholder="00:00:000">
         <button onclick="setTime()">Enter Time</button>
+        <p id="error-message">Invalid format. Please use 00:00:000.</p>
       </div>
       <div id="timer">
         <span class="timer__minutes">00</span>

@@ -3,6 +3,19 @@ const timerSeconds = document.querySelector(".timer__seconds")
 const timerMinutes = document.querySelector(".timer__minutes")
 const workingTime = document.querySelector(".working__time")
 
+document.getElementById('timeInput').addEventListener('input', function() {
+    let input = this.value;
+    let regex = /^\d{2}:\d{2}:\d{3}$/;
+
+    if (regex.test(input)) {
+        this.style.borderColor = ''; 
+        document.getElementById('error-message').style.display = 'none'; 
+    } else {
+        this.style.borderColor = 'red'; // Highlight border in red
+        document.getElementById('error-message').style.display = 'block'; 
+    }
+});
+
 let startTime
 let cancelId
 let countdown
@@ -29,6 +42,10 @@ function setTime() {
 }
 
 function startTimer(){
+    if (!storedTime) {
+        alert('please enter a time')
+        return
+    }
     startButton.disabled = true
     stopButton.disabled = false
     resetButton.disabled = false
